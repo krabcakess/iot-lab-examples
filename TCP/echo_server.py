@@ -20,12 +20,13 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
         while True:
             data = conn.recv(4096)
+            message = input("Enter message (blank input to end): ")
             if(not data):
                 break
             print("Received {} bytes of data decoded to: '{}'".format(
                 len(data), data.decode()))
             print("Sending data back.")
-            conn.sendall(data)
+            conn.sendall(message)
         
         print("Disconnecting from client.")
     print("Closing listening socket.")
