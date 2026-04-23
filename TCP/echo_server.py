@@ -14,20 +14,22 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.listen()
 
     print("Listening on {}...".format(ADDRESS))
-    conn, addr = s.accept()
-    with conn:
-        print("Connected to {}".format(addr))
+    while True:
+        conn, addr = s.accept()
+        with conn:
+            print("Connected to {}".format(addr))
 
-        while True:
-            data = conn.recv(4096)
-            message = input("Enter message (blank input to end): ")
-            if(not data):
-                break
-            print("Received {} bytes of data decoded to: '{}'".format(
-                len(data), data.decode()))
-            print("Sending data back.")
-            conn.sendall(message)
-        
-        print("Disconnecting from client.")
-    print("Closing listening socket.")
+            while True:
+            # message = input("Enter message (blank input to end): ")
+                data = conn.recv(4096)
+                if(not data):
+                    break
+                print("Received {} bytes of data decoded to: '{}'".format(
+                    len(data), data.decode()))
+                message = input("Enter message (blank input to end): ")
+                print("Sending data back.")
+                conn.sendall(message.encode())
+            
+            print("Disconnecting from client.")
+    #print("Closing listening socket.")
 print("Done.")
